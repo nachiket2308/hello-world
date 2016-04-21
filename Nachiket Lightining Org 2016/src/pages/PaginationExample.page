@@ -1,0 +1,52 @@
+<apex:page title="Pagination Example" controller="PaginationController" showHeader="false" sidebar="false" cache="false">
+    <apex:form>
+        <apex:sectionHeader title="Opportunity Table"/>
+        <apex:pageBlock><!-- Main PageBlock Starts Here -->
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="Process Selected Records" action="{!processSelectedRecords}" rerender="myPanel,myButtons"/>
+            </apex:pageBlockButtons>
+            
+            <apex:pageBlockButtons location="top" ><!-- PageBlockButtons Starts Here -->
+                <apex:outputPanel id="myButtons"><!-- OutPutPanel Starts Here -->
+                    <apex:commandButton action="{!Beginning}" title="Beginning" value="<<" disabled="{!disablePrevious}" reRender="opportunityTable,myPanel,myButtons"/>
+                    <apex:commandButton action="{!Previous}" title="Previous" value="<" disabled="{!disablePrevious}" reRender="opportunityTable,myPanel,myButtons"/>
+                    <apex:commandButton action="{!Next}" title="Next" value=">" disabled="{!disableNext}" reRender="opportunityTable,myPanel,myButtons"/>
+                    <apex:commandButton action="{!End}" title="End" value=">>" disabled="{!disableNext}" reRender="opportunityTable,myPanel,myButtons"/>
+                </apex:outputPanel><!-- OutPutPanel Ends Here -->
+            </apex:pageBlockButtons><!-- PageBlockButtons Ends Here -->
+
+            <!-- PageBlock Section -->
+            <apex:pageBlockSection columns="1">
+            </apex:pageBlockSection>
+
+            <!-- PageBlock Section For Total Oppportunity Records Starts Here-->
+            <apex:pageBlockSection id="table" title="Total Opportunity Records (Total List Size: {!total_size})" collapsible="false">
+                <!-- OutPutPanel For Wrapper Section Starts Here -->
+                <apex:outputPanel id="myPanel">
+                    <apex:pageMessages id="theMessages" />
+                    <apex:pageBlockTable id="opportunityTable" value="{!OpportunityRecords}" var="objWrapper" align="center">
+                        <apex:column >
+                            <apex:facet name="header">Selected</apex:facet>
+                            <apex:inputCheckbox value="{!objWrapper.isSelected}"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Name</apex:facet>
+                            <apex:inputField value="{!objWrapper.objOpp.Name}"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Name</apex:facet>
+                            <apex:inputField value="{!objWrapper.objOpp.StageName}"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Name</apex:facet>
+                            <apex:inputField value="{!objWrapper.objOpp.CloseDate}"/>
+                        </apex:column>
+                        <apex:facet name="footer">Showing Page # {!pageNumber} of {!totalPages}</apex:facet>
+                    </apex:pageBlockTable>
+                </apex:outputPanel>
+                <!-- OutPutPanel For Wrapper Section Ends Here -->
+            </apex:pageBlockSection>
+            <!-- PageBlock Section For Total Oppportunity Records Ends Here-->
+        </apex:pageBlock><!-- Main PageBlock Ends Here -->
+    </apex:form>
+</apex:page>
